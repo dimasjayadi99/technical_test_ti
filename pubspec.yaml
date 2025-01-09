@@ -24,6 +24,8 @@ dependencies:
   get_it: ^8.0.3
   shared_preferences: ^2.3.5
   intl: ^0.20.1
+  #  chewie: ^1.7.5
+  video_player: ^2.9.1
 
 dev_dependencies:
   flutter_test:

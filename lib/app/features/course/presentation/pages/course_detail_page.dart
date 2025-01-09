@@ -8,6 +8,7 @@ import '../../../../core/consts/path.dart';
 import '../../../../core/consts/style.dart';
 import '../../../../core/dependency/injection_container.dart';
 import '../../../../core/shared/custom_divider.dart';
+import 'lesson_page.dart';
 
 class CourseDetailPage extends StatelessWidget {
   final String id;
@@ -216,12 +217,19 @@ class _ContentsTabState extends State<ContentsTab> {
                 ),
               ),
               if (_isExpandedList[index])
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 8.0),
-                  child: ListTile(
-                    title: Text(
-                      item.lessonTitle,
-                      style: Theme.of(context).textTheme.bodyMedium,
+                GestureDetector(
+                  onTap: () {
+                    Navigator.of(context).push(MaterialPageRoute(
+                        builder: (context) => LessonPage(
+                            idLesson: item.lessonId.split(", ")[index])));
+                  },
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                    child: ListTile(
+                      title: Text(
+                        item.lessonTitle,
+                        style: Theme.of(context).textTheme.bodyMedium,
+                      ),
                     ),
                   ),
                 ),
