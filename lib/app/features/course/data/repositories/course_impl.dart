@@ -1,19 +1,24 @@
 import 'package:talent_insider_test/app/core/mapper/chapter_mapper.dart';
 import 'package:talent_insider_test/app/core/mapper/course_mapper.dart';
+import 'package:talent_insider_test/app/core/mapper/lesson_mapper.dart';
 import 'package:talent_insider_test/app/features/course/data/data_source/course_service.dart';
 import 'package:talent_insider_test/app/features/course/domain/entities/course_entity.dart';
 import 'package:talent_insider_test/app/features/course/domain/entities/chapter_entity.dart';
+import 'package:talent_insider_test/app/features/course/domain/entities/lesson_entity.dart';
 import 'package:talent_insider_test/app/features/course/domain/repositories/course_repository.dart';
 
 class CourseImpl extends CourseRepository {
   final CourseService courseService;
   final CourseMapper courseMapper;
   final ChapterMapper chapterMapper;
+  final LessonMapper lessonMapper;
 
-  CourseImpl(
-      {required this.courseService,
-      required this.courseMapper,
-      required this.chapterMapper});
+  CourseImpl({
+    required this.courseService,
+    required this.courseMapper,
+    required this.chapterMapper,
+    required this.lessonMapper,
+  });
 
   @override
   Future<CourseEntity> fetchDetailCourse(String id) async {
@@ -42,6 +47,17 @@ class CourseImpl extends CourseRepository {
     try {
       final response = await courseService.fetchChapter(id);
       final data = chapterMapper.toChapter(response);
+      return data;
+    } catch (e) {
+      rethrow;
+    }
+  }
+
+  @override
+  Future<LessonEntity> fetchLesson(String id) async {
+    try {
+      final response = await courseService.fetchLesson(id);
+      final data = lessonMapper.toLesson(response);
       return data;
     } catch (e) {
       rethrow;
