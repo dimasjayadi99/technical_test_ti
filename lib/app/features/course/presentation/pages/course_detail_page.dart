@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:talent_insider_test/app/core/shared/custom_button.dart';
 import 'package:talent_insider_test/app/core/shared/gap.dart';
+import 'package:talent_insider_test/app/features/course/domain/entities/chapter_entity.dart';
 import 'package:talent_insider_test/app/features/course/presentation/bloc/course_detail_bloc.dart';
 import '../../../../core/consts/path.dart';
 import '../../../../core/consts/style.dart';
@@ -31,6 +32,7 @@ class CourseDetailPage extends StatelessWidget {
             return Center(child: Text(state.message));
           } else if (state is CourseDetailSuccessState) {
             final data = state.data;
+            final chapter = state.chapter;
             return DefaultTabController(
               length: 3,
               child: Scaffold(
@@ -131,7 +133,7 @@ class CourseDetailPage extends StatelessWidget {
                         children: [
                           const Center(child: Text('Overview Content')),
                           ContentsTab(
-                            chaptersTitle: data.chapterTitles,
+                            chaptersTitle: chapter,
                           ),
                           const Center(child: Text('More Like This Content')),
                         ],
@@ -152,7 +154,7 @@ class CourseDetailPage extends StatelessWidget {
 }
 
 class ContentsTab extends StatefulWidget {
-  final List<String> chaptersTitle;
+  final List<ChapterEntity> chaptersTitle;
 
   const ContentsTab({super.key, required this.chaptersTitle});
 
@@ -199,14 +201,14 @@ class _ContentsTabState extends State<ContentsTab> {
                           ),
                           const Spacer(),
                           Text(
-                            '3 lessons || 18 min',
+                            '${item.lessonId.split(',').length} lessons || 18 min',
                             style: Theme.of(context).textTheme.bodySmall,
                           ),
                         ],
                       ),
                       const Gap.v(h: 8),
                       Text(
-                        item,
+                        item.title,
                         style: Theme.of(context).textTheme.titleMedium,
                       ),
                     ],
@@ -218,7 +220,7 @@ class _ContentsTabState extends State<ContentsTab> {
                   padding: const EdgeInsets.symmetric(horizontal: 8.0),
                   child: ListTile(
                     title: Text(
-                      'content chapter ${index + 1}',
+                      item.lessonTitle,
                       style: Theme.of(context).textTheme.bodyMedium,
                     ),
                   ),

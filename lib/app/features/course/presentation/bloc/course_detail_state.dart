@@ -11,11 +11,12 @@ class CourseDetailLoadingState extends CourseDetailState {}
 
 class CourseDetailSuccessState extends CourseDetailState {
   final CourseEntity data;
+  final List<ChapterEntity> chapter;
 
-  CourseDetailSuccessState(this.data);
+  CourseDetailSuccessState(this.data, this.chapter);
 
   @override
-  List<Object> get props => [data];
+  List<Object> get props => [data, chapter];
 }
 
 class CourseDetailFailedState extends CourseDetailState {
