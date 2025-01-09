@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:talent_insider_test/app/core/consts/style.dart';
-import 'package:talent_insider_test/app/features/home/presentation/pages/audio_book_page.dart';
+import 'package:talent_insider_test/app/features/audio_book/presentation/pages/audio_book_page.dart';
 import 'package:talent_insider_test/app/features/course/presentation/pages/course_page.dart';
 import '../../../../core/consts/path.dart';
 import '../../widgets/menu_item_widget.dart';

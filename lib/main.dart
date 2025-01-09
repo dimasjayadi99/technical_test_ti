@@ -5,7 +5,6 @@ import 'package:talent_insider_test/app/core/consts/style.dart';
 import 'package:talent_insider_test/app/core/dependency/injection_container.dart';
 import 'package:talent_insider_test/app/features/auth/presentation/pages/login_page.dart';
 import 'package:talent_insider_test/app/features/course/presentation/pages/course_page.dart';
-import 'package:talent_insider_test/app/features/home/presentation/pages/profile_page.dart';
 import 'package:talent_insider_test/app/features/introduction/presentation/pages/on_boarding_page.dart';
 import 'package:intl/date_symbol_data_local.dart';
 import 'app/features/home/presentation/pages/home_page.dart';
@@ -39,7 +38,6 @@ class MyApp extends StatelessWidget {
         '/login': (context) => MediaQueryWrapper(child: LoginPage()),
         '/main': (context) => const BottomNav(),
         '/course': (context) => CoursePage(),
-        '/profile': (context) => const ProfilePage(),
       },
     );
   }
