@@ -221,7 +221,9 @@ class _ContentsTabState extends State<ContentsTab> {
                   onTap: () {
                     Navigator.of(context).push(MaterialPageRoute(
                         builder: (context) => LessonPage(
-                            idLesson: item.lessonId.split(", ")[index])));
+                              idLesson: item.lessonId.split(", ")[index],
+                              titleLesson: item.lessonTitle.split(", ")[index],
+                            )));
                   },
                   child: Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 8.0),

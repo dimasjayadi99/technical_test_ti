@@ -8,8 +8,10 @@ import '../../../../core/shared/gap.dart';
 
 class LessonPage extends StatefulWidget {
   final String idLesson;
+  final String titleLesson;
 
-  const LessonPage({super.key, required this.idLesson});
+  const LessonPage(
+      {super.key, required this.idLesson, required this.titleLesson});
 
   @override
   State<LessonPage> createState() => _LessonPageState();
@@ -120,9 +122,9 @@ class _LessonPageState extends State<LessonPage> {
                         ),
                       ),
                       const Gap.v(h: 8),
-                      const Text(
-                        "Get Started with ChatGPT",
-                        style: TextStyle(fontSize: 18),
+                      Text(
+                        widget.titleLesson,
+                        style: const TextStyle(fontSize: 18),
                       ),
                       const Gap.v(h: 8),
                       Row(
