@@ -1,16 +1,59 @@
-# talent_insider_test
+# Technical Test Talent Insider
+Aplikasi berbasis mobile Flutter untuk kebutuhan technical test.
 
-A new Flutter project.
+![Frame 3 (2)](https://github.com/user-attachments/assets/8a811081-bb57-4bd1-bfe2-8f95d14e1fe7)
 
-## Getting Started
+## Instalasi
+1. **Clone repository ini**:  
+   Buka terminal dan jalankan perintah berikut:
+   ```bash
+   git clone <URL_REPOSITORY>
 
-This project is a starting point for a Flutter application.
+2. **Mengunduh semua dependency**
+   ```dependency
+   flutter pub get
+   ```
+3. **Jalankan aplikasi**
+   ```dependency
+   flutter run
+   ```
+## Third Party
+- `BLoC`: Untuk manajemen state.
+- `dio`: Untuk melakukan permintaan HTTP ke API.
+- `shared_preferences`: Digunakan untuk menyimpan data secara lokal di perangkat..
+- `get_it`: Mengelola dependency injection (DI)
+- `etc`.
 
-A few resources to get you started if this is your first Flutter project:
+## Struktur Folder
+```
+lib/
+└── app/
+    ├── core/
+    │   ├── const/
+    │   ├── dependency/
+    │   ├── utils/
+    │   └── etc/
+    ├── config/
+    │   ├── router/
+    │   ├── api_config/
+    │   └── etc/
+    ├── features/
+    │   ├── feature_name/
+    │   │   ├── data/
+    │   │   │   ├── data_sources/
+    │   │   │   ├── models/
+    │   │   │   └── repositories/
+    │   │   ├── domain/
+    │   │   │   ├── entities/
+    │   │   │   ├── repositories/
+    │   │   │   └── use_case/
+    │   │   └── presentation/
+    │   │       ├── bloc/
+    │   │       ├── pages/
+    │   │       └── widgets/
+    └── main.dart
+```
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
-
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+## Credit
+- [Github](https://github.com/dimasjayadi99)
+- [Linekdin](https://www.linkedin.com/in/dimasjayadi99/)
