@@ -43,4 +43,34 @@ class CustomButton {
       ),
     );
   }
+
+  Widget previousButton() {
+    return ElevatedButton(
+      onPressed: () {},
+      style: ElevatedButton.styleFrom(
+        backgroundColor: Colors.grey[850],
+        shape: const RoundedRectangleBorder(),
+        padding: const EdgeInsets.all(12),
+      ),
+      child: const Icon(
+        Icons.arrow_back,
+        color: Colors.white,
+      ),
+    );
+  }
+
+  Widget nextButton() {
+    return ElevatedButton(
+      onPressed: () {},
+      style: ElevatedButton.styleFrom(
+        backgroundColor: Colors.red,
+        shape: const RoundedRectangleBorder(),
+        padding: const EdgeInsets.all(12),
+      ),
+      child: const Icon(
+        Icons.arrow_forward,
+        color: Colors.white,
+      ),
+    );
+  }
 }
