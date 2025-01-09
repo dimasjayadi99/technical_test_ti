@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:talent_insider_test/app/features/audio_book/presentation/pages/audio_book_detail_page.dart';
 import 'package:talent_insider_test/app/features/audio_book/presentation/widgets/best_seller_card.dart';
 import 'package:talent_insider_test/app/features/audio_book/presentation/widgets/book_card.dart';
 import '../../../../core/consts/style.dart';
@@ -94,7 +95,13 @@ class AudioBookPage extends StatelessWidget {
             physics: const BouncingScrollPhysics(),
             scrollDirection: Axis.horizontal,
             itemBuilder: (context, index) {
-              return BestSellerCard(listBook: listBook, index: index);
+              return GestureDetector(
+                  onTap: () {
+                    Navigator.of(context).push(MaterialPageRoute(
+                        builder: (context) =>
+                            AudioBookDetailPage(bookModel: listBook[index])));
+                  },
+                  child: BestSellerCard(listBook: listBook, index: index));
             },
             separatorBuilder: (context, index) => const Gap.h(w: 24),
             itemCount: listBook.length,
@@ -117,7 +124,13 @@ class AudioBookPage extends StatelessWidget {
           shrinkWrap: true,
           physics: const NeverScrollableScrollPhysics(),
           itemBuilder: (context, index) {
-            return BookCard(listBook: listBook, index: index);
+            return GestureDetector(
+                onTap: () {
+                  Navigator.of(context).push(MaterialPageRoute(
+                      builder: (context) =>
+                          AudioBookDetailPage(bookModel: listBook[index])));
+                },
+                child: BookCard(listBook: listBook, index: index));
           },
           separatorBuilder: (context, index) {
             return Column(
