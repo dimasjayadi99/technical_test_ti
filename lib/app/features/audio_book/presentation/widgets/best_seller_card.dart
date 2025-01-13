@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:talent_insider_test/app/features/audio_book/domain/entities/audio_book_entity.dart';
 import '../../../../core/shared/gap.dart';
-import '../data/models/book_model.dart';
 
 class BestSellerCard extends StatelessWidget {
-  final List<BookModel> listBook;
+  final List<AudioBookEntity> listBook;
   final int index;
 
   const BestSellerCard(
@@ -19,7 +19,7 @@ class BestSellerCard extends StatelessWidget {
           ClipRRect(
             borderRadius: BorderRadius.circular(16),
             child: Image.network(
-              listBook[index].imagePath,
+              listBook[index].urlThumb,
               fit: BoxFit.cover,
               height: 185,
             ),
@@ -31,7 +31,7 @@ class BestSellerCard extends StatelessWidget {
             overflow: TextOverflow.ellipsis,
           ),
           Text(
-            listBook[index].author,
+            listBook[index].artist,
             maxLines: 1,
             overflow: TextOverflow.ellipsis,
             style: Theme.of(context).textTheme.labelMedium,

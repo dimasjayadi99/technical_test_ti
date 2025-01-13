@@ -1,49 +1,76 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:talent_insider_test/app/features/audio_book/domain/entities/audio_book_entity.dart';
+import 'package:talent_insider_test/app/features/audio_book/presentation/bloc/audio_book_bloc.dart';
 import 'package:talent_insider_test/app/features/audio_book/presentation/pages/audio_book_detail_page.dart';
 import 'package:talent_insider_test/app/features/audio_book/presentation/widgets/best_seller_card.dart';
 import 'package:talent_insider_test/app/features/audio_book/presentation/widgets/book_card.dart';
 import '../../../../core/consts/style.dart';
+import '../../../../core/dependency/injection_container.dart';
 import '../../../../core/shared/gap.dart';
-import '../data/models/book_model.dart';
 
 class AudioBookPage extends StatelessWidget {
   const AudioBookPage({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: _buildAppBar(context),
-      body: SafeArea(
-        child: Padding(
-          padding: const EdgeInsets.all(16),
-          child: Column(
-            children: [
-              const TextField(
-                decoration: InputDecoration(
-                  prefixIcon: Icon(Icons.search),
-                  suffixIcon: Icon(
-                    Icons.tune,
-                    color: Colors.white,
+    return BlocProvider<AudioBookBloc>(
+      create: (_) {
+        final bloc = sl<AudioBookBloc>();
+        bloc.listAudioBooks();
+        return bloc;
+      },
+      child: Scaffold(
+        appBar: _buildAppBar(context),
+        body: SafeArea(
+          child: Padding(
+            padding: const EdgeInsets.all(16),
+            child: Column(
+              children: [
+                const TextField(
+                  decoration: InputDecoration(
+                    prefixIcon: Icon(Icons.search),
+                    suffixIcon: Icon(
+                      Icons.tune,
+                      color: Colors.white,
+                    ),
+                    hintText: 'Search Keywords',
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.all(Radius.circular(8)),
+                    ),
                   ),
-                  hintText: 'Search Keywords',
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.all(Radius.circular(8)),
-                  ),
+                  style: TextStyle(color: Colors.white),
                 ),
-                style: TextStyle(color: Colors.white),
-              ),
-              const Gap.v(h: 24),
-              Expanded(
-                child: ListView(
-                  physics: const BouncingScrollPhysics(),
-                  children: [
-                    _buildBestSeller(context),
-                    const Gap.v(h: 32),
-                    _buildMoreBooks(context),
-                  ],
-                ),
-              )
-            ],
+                const Gap.v(h: 24),
+                BlocBuilder<AudioBookBloc, AudioBookState>(
+                  builder: (context, state) {
+                    if (state is AudioBookLoadingState) {
+                      return const Center(
+                        child: CircularProgressIndicator(),
+                      );
+                    } else if (state is AudioBookFailedState) {
+                      return Center(child: Text(state.message));
+                    } else if (state is AudioBookSuccessState) {
+                      final data = state.books;
+                      return Expanded(
+                        child: ListView(
+                          physics: const BouncingScrollPhysics(),
+                          children: [
+                            _buildBestSeller(context, data),
+                            const Gap.v(h: 32),
+                            _buildMoreBooks(context, data),
+                          ],
+                        ),
+                      );
+                    } else {
+                      return const Center(
+                          child: Text(
+                              'Terjadi kesalahan saat menampilkan halaman'));
+                    }
+                  },
+                )
+              ],
+            ),
           ),
         ),
       ),
@@ -80,7 +107,7 @@ class AudioBookPage extends StatelessWidget {
     );
   }
 
-  Widget _buildBestSeller(context) {
+  Widget _buildBestSeller(context, List<AudioBookEntity> data) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -99,19 +126,19 @@ class AudioBookPage extends StatelessWidget {
                   onTap: () {
                     Navigator.of(context).push(MaterialPageRoute(
                         builder: (context) =>
-                            AudioBookDetailPage(bookModel: listBook[index])));
+                            AudioBookDetailPage(id: data[index].id)));
                   },
-                  child: BestSellerCard(listBook: listBook, index: index));
+                  child: BestSellerCard(listBook: data, index: index));
             },
             separatorBuilder: (context, index) => const Gap.h(w: 24),
-            itemCount: listBook.length,
+            itemCount: data.length,
           ),
         ),
       ],
     );
   }
 
-  Widget _buildMoreBooks(context) {
+  Widget _buildMoreBooks(context, List<AudioBookEntity> data) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -128,9 +155,9 @@ class AudioBookPage extends StatelessWidget {
                 onTap: () {
                   Navigator.of(context).push(MaterialPageRoute(
                       builder: (context) =>
-                          AudioBookDetailPage(bookModel: listBook[index])));
+                          AudioBookDetailPage(id: data[index].id)));
                 },
-                child: BookCard(listBook: listBook, index: index));
+                child: BookCard(listBook: data, index: index));
           },
           separatorBuilder: (context, index) {
             return Column(
@@ -155,7 +182,7 @@ class AudioBookPage extends StatelessWidget {
               ],
             );
           },
-          itemCount: listBook.length,
+          itemCount: data.length,
         ),
       ],
     );

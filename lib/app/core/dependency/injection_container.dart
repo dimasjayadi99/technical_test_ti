@@ -1,9 +1,17 @@
 import 'package:get_it/get_it.dart';
 import 'package:talent_insider_test/app/core/helpers/shared_prefs_helper.dart';
+import 'package:talent_insider_test/app/core/mapper/audi_book_mapper.dart';
 import 'package:talent_insider_test/app/core/mapper/chapter_mapper.dart';
 import 'package:talent_insider_test/app/core/mapper/course_mapper.dart';
 import 'package:talent_insider_test/app/core/mapper/lesson_mapper.dart';
 import 'package:talent_insider_test/app/core/mapper/user_mapper.dart';
+import 'package:talent_insider_test/app/features/audio_book/data/data_sources/remote/audio_book_service.dart';
+import 'package:talent_insider_test/app/features/audio_book/data/repositories/audio_book_impl.dart';
+import 'package:talent_insider_test/app/features/audio_book/domain/repositories/audi_book_repository.dart';
+import 'package:talent_insider_test/app/features/audio_book/domain/use_cases/fetch_audio_book.dart';
+import 'package:talent_insider_test/app/features/audio_book/domain/use_cases/fetch_list_audio_books.dart';
+import 'package:talent_insider_test/app/features/audio_book/presentation/bloc/audio_book_bloc.dart';
+import 'package:talent_insider_test/app/features/audio_book/presentation/bloc/audio_book_detail_bloc.dart';
 import 'package:talent_insider_test/app/features/auth/data/data_source/remote/auth_services.dart';
 import 'package:talent_insider_test/app/features/auth/data/repositories/auth_impl.dart';
 import 'package:talent_insider_test/app/features/auth/domain/repositories/auth_repository.dart';
@@ -30,12 +38,14 @@ void setupLocator() {
   // service
   sl.registerLazySingleton<AuthService>(() => AuthService());
   sl.registerLazySingleton<CourseService>(() => CourseService());
+  sl.registerLazySingleton<AudioBookService>(() => AudioBookService());
 
   // mapper
   sl.registerLazySingleton<UserMapper>(() => UserMapper());
   sl.registerLazySingleton<CourseMapper>(() => CourseMapper());
   sl.registerLazySingleton<ChapterMapper>(() => ChapterMapper());
   sl.registerLazySingleton<LessonMapper>(() => LessonMapper());
+  sl.registerLazySingleton<AudioMapper>(() => AudioMapper());
 
   // repository
   sl.registerLazySingleton<AuthRepository>(
@@ -45,6 +55,8 @@ void setupLocator() {
       courseMapper: sl(),
       chapterMapper: sl(),
       lessonMapper: sl()));
+  sl.registerLazySingleton<AudioBookRepository>(
+      () => AudioBookImpl(audioBookService: sl(), audioMapper: sl()));
 
   // use case
   sl.registerLazySingleton<LoginAuth>(() => LoginAuth(sl()));
@@ -52,6 +64,9 @@ void setupLocator() {
   sl.registerLazySingleton<FetchDetailCourse>(() => FetchDetailCourse(sl()));
   sl.registerLazySingleton<FetchListChapter>(() => FetchListChapter(sl()));
   sl.registerLazySingleton<FetchLesson>(() => FetchLesson(sl()));
+  sl.registerLazySingleton<FetchListAudioBooks>(
+      () => FetchListAudioBooks(sl()));
+  sl.registerLazySingleton<FetchAudioBook>(() => FetchAudioBook(sl()));
 
   // Bloc
   sl.registerFactory(() => LoginBloc(loginUseCase: sl()));
@@ -59,4 +74,6 @@ void setupLocator() {
   sl.registerFactory(() => LessonBloc(fetchLesson: sl()));
   sl.registerFactory(
       () => CourseDetailBloc(fetchCourseDetail: sl(), fetchListChapter: sl()));
+  sl.registerFactory(() => AudioBookBloc(fetchListAudioBooks: sl()));
+  sl.registerFactory(() => AudioBookDetailBloc(fetchAudioBook: sl()));
 }

@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:talent_insider_test/app/features/audio_book/domain/entities/audio_book_entity.dart';
 import '../../../../core/consts/style.dart';
 import '../../../../core/shared/gap.dart';
-import '../data/models/book_model.dart';
 
 class BookCard extends StatelessWidget {
-  final List<BookModel> listBook;
+  final List<AudioBookEntity> listBook;
   final int index;
 
   const BookCard({super.key, required this.listBook, required this.index});
@@ -22,7 +22,7 @@ class BookCard extends StatelessWidget {
             child: ClipRRect(
               borderRadius: BorderRadius.circular(8),
               child: Image.network(
-                listBook[index].imagePath,
+                listBook[index].urlThumb,
                 fit: BoxFit.cover,
               ),
             ),
@@ -44,7 +44,7 @@ class BookCard extends StatelessWidget {
                             style: Theme.of(context).textTheme.titleMedium,
                           ),
                           Text(
-                            listBook[index].author,
+                            listBook[index].artist,
                             style: Theme.of(context).textTheme.labelMedium,
                           ),
                         ],
@@ -62,7 +62,7 @@ class BookCard extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Text(
-                      '${listBook[index].chapter} Chapters',
+                      '5 Chapters',
                       style: Theme.of(context).textTheme.labelSmall,
                     ),
                     Row(
@@ -74,7 +74,7 @@ class BookCard extends StatelessWidget {
                         ),
                         const Gap.h(w: 4),
                         Text(
-                          '${listBook[index].duration} min',
+                          '45 min',
                           style: Theme.of(context).textTheme.labelSmall,
                         ),
                       ],
