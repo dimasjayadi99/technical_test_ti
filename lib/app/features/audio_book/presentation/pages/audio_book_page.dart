@@ -45,8 +45,10 @@ class AudioBookPage extends StatelessWidget {
                 BlocBuilder<AudioBookBloc, AudioBookState>(
                   builder: (context, state) {
                     if (state is AudioBookLoadingState) {
-                      return const Center(
-                        child: CircularProgressIndicator(),
+                      return const Expanded(
+                        child: Center(
+                          child: CircularProgressIndicator(),
+                        ),
                       );
                     } else if (state is AudioBookFailedState) {
                       return Center(child: Text(state.message));

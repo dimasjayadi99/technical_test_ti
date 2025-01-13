@@ -30,3 +30,31 @@ class AudioBookDetailFailedState extends AudioBookDetailState {
   @override
   List<Object?> get props => [message];
 }
+
+class AudioPlayingState extends AudioBookDetailSuccessState {
+  final Duration position;
+  final Duration duration;
+
+  const AudioPlayingState({
+    required super.data,
+    required this.position,
+    required this.duration,
+  });
+
+  @override
+  List<Object?> get props => [data, position, duration];
+}
+
+class AudioPausedState extends AudioBookDetailSuccessState {
+  final Duration position;
+  final Duration duration;
+
+  const AudioPausedState({
+    required super.data,
+    required this.position,
+    required this.duration,
+  });
+
+  @override
+  List<Object?> get props => [data, position, duration];
+}
