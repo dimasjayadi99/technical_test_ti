@@ -37,11 +37,13 @@ class _LessonPageState extends State<LessonPage> {
     try {
       await _controller!.initialize();
       _chewieController = ChewieController(
-        videoPlayerController: _controller!,
-        aspectRatio: _controller!.value.aspectRatio,
-        autoPlay: false,
-        looping: false,
-      );
+          videoPlayerController: _controller!,
+          aspectRatio: _controller!.value.aspectRatio,
+          autoPlay: false,
+          looping: false,
+          autoInitialize: true,
+          showOptions: false,
+          showControls: true);
 
       setState(() {
         _isPlayerInitialized = true;
